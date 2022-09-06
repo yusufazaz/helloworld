@@ -1,0 +1,15 @@
+application:
+  resources:
+    - alias: sns_topic_a
+      type: SNS
+      name: arn:aws:sns:us-east-1:000000000000:HELLO_WORLD_TPC
+      enabled: true
+    - alias: sqs_queue_a
+      type: SQS
+      name: HELLO_WORLD_Q
+      enabled: true      
+    - alias: s3_bucket
+      type: S3
+      name: hello-world-bucket
+      enabled: true      
+ 

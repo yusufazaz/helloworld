@@ -1,2 +1,50 @@
 server.port: 8090
 spring.h2.console.enabled: true
+    
+logging:
+  pattern:
+     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+     root: INFO
+     org.springframework.web: DEBUG
+     com.peraton.air: DEBUG
+application.env: default
+cloud:
+  aws:
+    stack.auto: false
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
+      - org.springframework.cloud.aws.autoconfigure.context.ContextRegionProviderAutoConfiguration
+---
+spring:
+  profiles: aws
+application:
+  aws:
+    region: us-east-1
+    local.endpoint: http://localhost:4566  
+cloud:
+  aws:
+    local.endpoint: http://localhost:4566
+    region:
+      static: us-east-1
+    stack.auto: false
+    credentials.instanceProfile: false
+
+---
+spring:
+  profiles: azure
+application:
+  azure:
+    region: us-east-1
+    local.endpoint: http://localhost:4566  
+cloud:
+  azure:
+    local.endpoint: http://localhost:4566
+    region:
+      static: us-east-1
+    stack.auto: false
+    credentials.instanceProfile: false
+     

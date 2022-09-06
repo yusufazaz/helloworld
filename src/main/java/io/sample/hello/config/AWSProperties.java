@@ -3,10 +3,12 @@ package io.sample.hello.config;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.support.EncodedResource;
@@ -19,29 +21,27 @@ import java.io.IOException;
 import java.util.*;
 
 @Data
-@ConfigurationProperties(prefix = "rds")
-@PropertySource(value = "classpath:rds-${application.env:default}.yml", factory = YamlPropertySourceFactory.class)
+@PropertySource(value = "classpath:aws-${application.env:default}.yml", factory = AWSYamlPropertySourceFactory.class)
 @Component
 @Slf4j
-public class DataSourceProperties {
+@Profile("aws")
+public class AWSProperties {
 
-    private List<RDSConfig> datasources = new ArrayList<>();
+    private List<AWSConfig> resources = new ArrayList<>();
 
     @Getter
     @Setter
-    public static class RDSConfig {
+    @ToString
+    public static class AWSConfig {
         private String alias;
-        private String url;
-        private String driver;
-        private String database;
-        private String username;
-        private String password;
+        private String type;
+        private String name;
         private Boolean enabled;
     }
 
 }
 
-class YamlPropertySourceFactory implements PropertySourceFactory {
+class AWSYamlPropertySourceFactory implements PropertySourceFactory {
 
     @Override
     public PropertiesPropertySource createPropertySource(@Nullable String name, EncodedResource resource) throws IOException {

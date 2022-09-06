@@ -1,0 +1,30 @@
+rds:
+  datasources:
+    - alias: rds_a
+      url: jdbc:h2:mem:testdb1
+      database: rds_a_db
+      username: sa
+      password: 
+      driver: org.h2.Driver
+      enabled: true
+    - alias: rds_b
+      url: jdbc:h2:mem:testdb2
+      database: rds_a_db
+      username: sa
+      password: ""
+      driver: org.h2.Driver
+      enabled: true
+    - alias: rds_c
+      url: jdbc:h2:mem:testdb3
+      database: rds_a_db
+      username: sa
+      password: ""
+      driver: org.h2.Driver
+      enabled: false
+    - alias: rds_d
+      url: jdbc:mariadb://localhost:3306/test
+      database: rds_d_db
+      username: root
+      password: "adminadmin"
+      driver: org.mariadb.jdbc.Driver
+      enabled: true

@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RDSDataSources {
 
-
-
     private Map<String, DataSource> rdsDatasources;
-
 
     private final RDSDatasourceService rdsDatasourceService;
 
@@ -30,7 +27,7 @@ public class RDSDataSources {
 
     @PostConstruct
     @Lazy
-    public void initTenant() {
+    public void initDatasources() {
     	log.info("Initializing RDS Datasources");
     	rdsDatasources = rdsDatasourceService.loadRDSDatasources();
     }

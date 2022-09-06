@@ -38,8 +38,8 @@ public class RDSDatasourceService {
      public Map<String, DataSource> loadRDSDatasources() {
 
 
-            List<DataSourceProperties.RDSConfig> tenants = dataSourceProperties.getDatasources();
-            tenants.forEach(d -> {
+            List<DataSourceProperties.RDSConfig> rdsSources = dataSourceProperties.getDatasources();
+            rdsSources.forEach(d -> {
             	if(d.getEnabled()) {
 	                DataSource dataSource = DataSourceBuilder.create()
 	                        .driverClassName(d.getDriver())
