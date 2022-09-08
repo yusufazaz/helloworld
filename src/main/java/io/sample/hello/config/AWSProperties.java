@@ -21,13 +21,15 @@ import java.io.IOException;
 import java.util.*;
 
 @Data
+@ConfigurationProperties(prefix = "application")
 @PropertySource(value = "classpath:aws-${application.env:default}.yml", factory = AWSYamlPropertySourceFactory.class)
 @Component
 @Slf4j
 @Profile("aws")
 public class AWSProperties {
 
-    private List<AWSConfig> resources = new ArrayList<>();
+
+	private List<AWSConfig> awsResources = new ArrayList<>();
 
     @Getter
     @Setter
@@ -39,7 +41,9 @@ public class AWSProperties {
         private Boolean enabled;
     }
 
+
 }
+
 
 class AWSYamlPropertySourceFactory implements PropertySourceFactory {
 
@@ -47,7 +51,7 @@ class AWSYamlPropertySourceFactory implements PropertySourceFactory {
     public PropertiesPropertySource createPropertySource(@Nullable String name, EncodedResource resource) throws IOException {
         Properties propertiesFromYaml = loadYamlIntoProperties(resource);
         String sourceName = name != null ? name : resource.getResource().getFilename();
-        return new PropertiesPropertySource(Objects.requireNonNull(sourceName), propertiesFromYaml);
+        return  new PropertiesPropertySource(Objects.requireNonNull(sourceName), propertiesFromYaml);
     }
 
     private Properties loadYamlIntoProperties(EncodedResource resource) throws FileNotFoundException {

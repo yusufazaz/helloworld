@@ -9,7 +9,7 @@ logging:
      root: INFO
      org.springframework.web: DEBUG
      com.peraton.air: DEBUG
-application.env: default
+application.env: local
 cloud:
   aws:
     stack.auto: false
@@ -18,6 +18,16 @@ spring:
     exclude:
       - org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
       - org.springframework.cloud.aws.autoconfigure.context.ContextRegionProviderAutoConfiguration
+---
+spring:
+  profiles: local
+application.env: local 
+
+---
+spring:
+  profiles: qa
+application.env: qa
+ 
 ---
 spring:
   profiles: aws
@@ -36,6 +46,21 @@ cloud:
 ---
 spring:
   profiles: azure
+application:
+  azure:
+    region: us-east-1
+    local.endpoint: http://localhost:4566  
+cloud:
+  azure:
+    local.endpoint: http://localhost:4566
+    region:
+      static: us-east-1
+    stack.auto: false
+    credentials.instanceProfile: false
+
+---
+spring:
+  profiles: gcp
 application:
   azure:
     region: us-east-1
