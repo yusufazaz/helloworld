@@ -1,6 +1,9 @@
 package io.sample.hello.service;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,9 +38,9 @@ public class RDSDatasourceService {
         this.dataSourceProperties = dataSourceProperties;
     }
 
-     public Map<String, DataSource> loadRDSDatasources() {
+     public Map<String, Result> loadRDSDatasources() {
 
-
+    	 	Map<String, Result>					resultMap = new HashMap();
             List<DataSourceProperties.RDSConfig> rdsSources = dataSourceProperties.getDatasources();
             rdsSources.forEach(d -> {
             	if(d.getEnabled()) {
@@ -50,14 +53,26 @@ public class RDSDatasourceService {
 	                try(Connection c = dataSource.getConnection()) {
 	                	rdsDataSources.put(d.getAlias(), dataSource);   
 	                	log.info("Datasource {} connection succesfull", d.getAlias());
+	                	Result result  = new Result(d.getAlias(),true, null);
+	                	resultMap.put(d.getAlias(), result);
 	                }catch(Exception e) {
 	                	log.warn("Unable to connect to RDS datasource {}", d.getAlias());
+	                	Result result  = new Result(d.getAlias(),false, getStacktraceAsString(e));
+	                	resultMap.put(d.getAlias(), result);
+
 	                }
             	}else {
             		log.info("Datasource {} is disabled", d.getAlias());
             	}
             });
-            return rdsDataSources;
+            log.info("Results Map = {}", resultMap);
+            return resultMap;
     }
 
+     private String getStacktraceAsString(Exception e) {
+    	 StringWriter stringWriter = new StringWriter();
+    	 PrintWriter printWriter = new PrintWriter(stringWriter);
+    	 e.printStackTrace(printWriter);
+    	 return stringWriter.toString();
+     }
  }
