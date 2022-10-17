@@ -2,10 +2,6 @@ package io.sample.hello.config;
 
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import io.sample.hello.service.RDSDatasourceService;
@@ -25,15 +21,6 @@ public class RDSDataSources {
     }
 
 
-    @PostConstruct
-    @Lazy
-    public void initDatasources() {    	
-    	rdsDatasourcesResults = rdsDatasourceService.loadRDSDatasources();
-    	log.info("Initializing RDS Datasources={}",rdsDatasourcesResults);
-    }
-    
-    public Map<String, Result>  getDatasourceResults(){
-    	return rdsDatasourcesResults;
-    }
+
 
 }

@@ -9,6 +9,8 @@ logging:
      root: INFO
      org.springframework.web: DEBUG
      com.peraton.air: DEBUG
+     org.springframework.cache: TRACE
+     
 application.env: local
 cloud:
   aws:
