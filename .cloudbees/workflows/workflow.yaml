@@ -27,6 +27,6 @@ jobs:
         uses: docker://maven:3.8.7-openjdk-18-slim
         run: |
           set -eo pipefail
-          /.mvnw packag
+          mvn package
           echo "________ BUILD ADVISOR ________"
           echo "________ TEST ADVISOR ________"
