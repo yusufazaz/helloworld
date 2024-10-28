@@ -1,0 +1,31 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name:  build
+
+on:
+  push:
+    branches:
+    - '**'
+
+permissions:
+  scm-token-own: read
+  scm-token-org: read
+  id-token: write
+
+jobs:
+  build:
+    steps:
+    - name: Get source code
+      uses: cloudbees-io/checkout@v1
+    - name: Setup git credentials
+      uses: cloudbees-io/configure-git-global-credentials@v1
+      with:
+        repositories: calculi-corp/dsl-engine-cli, cloudbees-io/workflow-advisor
+    - id: build
+      name: Build
+      uses: docker://golang:1.21
+      run: |
+        set -eo pipefail
+        echo "________ BUILD ADVISOR ________"
+        echo "________ TEST ADVISOR ________"
+  
